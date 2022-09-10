@@ -1,6 +1,8 @@
-import {useState,useEffect} from "react"
+import {useState,useEffect,useContext} from "react"
 import Pet from './Pet'
 import useBreedlist from "./setBreedlist"
+import Results from './Results'
+import ThemeContext from "./ThemeContext"
     // const location="Cairo"
     //className instead of class because class is used in js
     //in this example it wont render Cairo because its a constant location    we need to use hook useState()
@@ -23,6 +25,9 @@ const sum2=(x,y)=>(x+y)this is implicit return use in react and jsx
 
 //https://reactjs.org/docs/events.html#supported-events 
 //for complete react events
+/*install react developer tools extention it will add 2 optionsin yor inspect element 
+Components and profiler
+*/
 
 const SearchParams=()=>{
 //useEffect allows you to say "do a render of this component first so the user can see something then as soon as the render is done, then do something (the something here being an effect.) In our case, we want the user to see our UI first then we want to make a request to the API 
@@ -33,6 +38,11 @@ const SearchParams=()=>{
     const [animal,setAnimal]=useState("")
     const [breed,setBreed]=useState("")
     const [breeds]=useBreedlist(animal)
+    const [theme,setTheme] = useContext(ThemeContext)
+
+    //
+    //    const [theme,setTheme] = useContext(ThemeContext) we should put setTheme but we wont set it
+    
     //useEffect has to be under useState
     useEffect(()=>{
         requestPets();
@@ -89,11 +99,25 @@ async function requestPets(){
                 
                 </select>
                 </label>
-            <button>Submit</button>
-        </form>
-        {pets.map((pet)=>( <Pet name={pet.name} animal={pet.animal} breed={pet.breed} key={pet.id} />))}
-    </div> 
-   
+                <label htmlFor="t3heme">Theme
+                <select value={theme} onChange={(e)=>{setTheme(e.target.value)}}>
+                    <option value="peru">Peru</option>
+                    <option value="red">red</option>
+                    <option value="darkblue">darkblue</option>
+                    <option value="chartreuse">chartreuse</option>
+                    <option value="mediumorchid">mediumorchid</option>
+                    <option value="#f06d06">Fog Dog</option>
+                    </select>
+                    </label>
 
+            <button style={{backgroundColor:theme}}>Submit</button>
+            
+        </form>
+        
+<Results pets={pets}/>
+       
+ </div> 
+   
+//{{backgroundColor:{theme}}} the first {} is for jsx to tell itthat isan expression then second is fn obj
 )}
 export default SearchParams;

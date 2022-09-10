@@ -1,5 +1,5 @@
 //making your own hook
-import {useState,useEffect} from 'react'
+import {useState,useEffect,useDebugValue} from 'react'
 
 
 var localcache ={}
@@ -13,6 +13,9 @@ export default function useBreedlist(animal){
 // useEffect(()=>{
 // alert(status)
 // },[status])
+
+useDebugValue("hi from react")
+useDebugValue("number of objects in localcache is :" +Object.keys(localcache).length)
 useEffect(()=>{
     if(!animal){
         setBreedlist([])
